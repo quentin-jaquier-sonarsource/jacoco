@@ -48,6 +48,17 @@ public class KotlinDefaultArgumentsFilterTest extends FilterTestBase {
 		return m;
 	}
 
+	@Test(expected = NullPointerException.class)
+	public void empty_instructions_list() {
+		final MethodNode m = new MethodNode(InstrSupport.ASM_API_VERSION,
+				Opcodes.ACC_SYNTHETIC, "origin$default", "(LTarget;IILjava/lang/Object;)V", null, null);
+
+		context.classAnnotations
+				.add(KotlinGeneratedFilter.KOTLIN_METADATA_DESC);
+
+		filter.filter(m, context, output);
+	}
+
 	@Test
 	public void should_filter() {
 		final MethodNode m = createMethod(Opcodes.ACC_SYNTHETIC,
